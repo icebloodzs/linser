@@ -1,15 +1,19 @@
-# console 项目功能展示
+# console 前端功能
 
-## react项目功能
+## react
 
-> BASE_URL = /api/v1/
+> 登陆前：BASE_URL = /api/v1/
+>
+> 登陆后： BASE_URL = /api/v1/${params}
 
 ### 登陆功能
-* path: /longin
-* 输入账号密码
-* 点击忘记密码，可进行邮箱验证
-* 输入内容重置
-* 账号密码不能为空
+```
+ path: /longin
+```
+- [x] 输入账号密码
+- [x] 点击忘记密码，可进行邮箱验证
+- [x] 输入内容重置
+- [x] 账号密码不能为空    
 
 ```js
 //登陆方式
@@ -21,6 +25,7 @@ params: {
 response: {
     "success":true,"page":"login"
 }
+
 //sitedid
 method: 'get',
 url: 'getsitedid',
@@ -32,7 +37,8 @@ response:
 {
     "success":true,"siteId":"xx322ds"
 }
-//密码规则
+
+获取密码配置
 method: 'get',
 url: '/accessmanage/passwordstrategy',
 params: {
@@ -73,8 +79,7 @@ response: {
     ]
 }
 
-// 登陆后
-> BASE_URL = /api/v1/auth
+登陆后
 method: 'post', 
 url: '/menu',
 body: { // id: 0 时获取头部一级菜单  id: 1 时获取左侧二级菜单
@@ -112,25 +117,13 @@ response: {
     "success":true,"detail":"xx322ds"
 }
 
-//获取密码规则
+获取密码规则
 method: 'get',
 url: 'passwordstrategy',
-params: {
-    random: Number //随机数
-},
-response: {
-    "success": true,
-    "minLengthOfPasswordManager": 8,
-    "passwordStyleManager": "1",
-    "updatePasswordPeroidManager": 3,
-    "isAllowRepeatePasswordManager": false,
-    "minLengthOfPasswordVPN": 8,
-    "passwordStyleVPN": "1",
-    "updatePasswordPeroidVPN": 3,
-    "isAllowRepeatePasswordVPN": false
-}
 
-method: 'post', //重置密码 
+重置密码
+
+method: 'post', 
 url: '/reset',
 body: { //newPassword为加密后的密文
     username,newPassword
@@ -142,12 +135,17 @@ response: {
     "success":true,"detail":"xx322ds"
 }
 
+退出
+'GET /logout'
 ```
 
 ### 404页面
 
 ### 账户设置（登陆后的跳转页）
-* path: /accountmanagement
+
+```
+path: /accountmanagement
+```
 * 搜索查询功能（无）
 * 添加账号功能
 * 可操作性（发送邮件按钮、详细按钮、删除按钮）(无)
@@ -210,8 +208,8 @@ response: {
 * 加密转换
 * 数据复原
 
-#### 3. 安全审计
-1. 业务日志 (接口报错)
+#### 3. 安全审计(✅)
+1. 业务日志
 ```js
 path: ftplog
 ```
@@ -226,7 +224,7 @@ path: ftplog
 
 ```js
 method: 'post', //
-url: '/audit/ftplog',
+url: '/audit/tcplog',
 body: { 
     paging:{
         entries:20,
@@ -250,7 +248,7 @@ response: {
 }
 ```
 
-2. 系统日志  
+2. 系统日志  （✅）
 ```
 path:systemlog
 ```
@@ -263,7 +261,7 @@ path:systemlog
 * 事件结果
 
 ```js
-method: 'post', //
+method: 'post', 
 url: '/audit/systemlog',
 body: { 
     paging:{
@@ -387,7 +385,7 @@ path: ftpusers
 ```
 * table表格展示（无操作）
 
-#### 7. 设备监控
+#### 7. 设备监控（✅）
 ```
 path: systemmonitor
 ```
@@ -414,7 +412,9 @@ path:remotemonitor
         * 密码、USBKey重置按钮
         * 是否启用按钮
     ```js
-    method: 'post', //获取管理员信息
+    获取管理员信息
+    
+    method: 'post', 
     url: '/managersettings',
     params: {
         random: Number //随机数
@@ -430,8 +430,10 @@ path:remotemonitor
         "total": 2,
         "success": true
     }
-
-    method: 'post', //添加新的管理员
+    
+    添加新的管理员
+    
+    method: 'post', 
     url: '/managersettings/add',
     params: {
         random: Number //随机数
@@ -442,8 +444,10 @@ path:remotemonitor
     response: {
        "success":true,"detail":"添加成功！"
     }
-
-    method: 'post', //编辑管理员信息
+    
+    编辑管理员信息
+    
+    method: 'post', 
     url: '/managersettings/update',
     params: {
         random: Number //随机数
@@ -454,8 +458,10 @@ path:remotemonitor
     response: {
       
     }
-
-    method: 'post', //启用
+    
+    管理员启用/停用
+    
+    method: 'post', 
     url: '/managersettings/active',
     params: {
         random: Number //随机数
@@ -466,7 +472,10 @@ path:remotemonitor
     response: {
        "success":true
     }
-    method: 'post', //删除
+    
+    管理员删除
+    
+    method: 'post', 
     url: '/managersettings/delete',
     params: {
         random: Number //随机数
@@ -483,16 +492,19 @@ path:remotemonitor
        ```
         path: managersettings_frame/rolesettings
        ```
-        * 新建角色（可配置最大数量、权限）
-        * 编辑、删除、查看权限按钮
+        - [x] 新建角色（可配置最大数量、权限）
+        - [x] 编辑、删除、查看权限按钮
     ```js
-    'GET pageperms' //获取所有角色信息
-    'GET rolessettings' //新建或编辑 删除（只传id）
+    获取所有角色信息
+    'GET pageperms' 
+    
+    新建或编辑 删除（只传id）
+    'GET rolessettings' 
     body:{
         authorizationsForms:[],
         count,name
     }
-
+    
     ```
 
 
@@ -500,60 +512,86 @@ path:remotemonitor
 ```
 path: /access_frame
 ```
-    1. 登陆配置
-        * 允许登录失败次数
-        * 登录失败锁定时间
-        * 空闲注销时间
+登陆配置
+
+- 允许登录失败次数
+- 登录失败锁定时间 
+- 空闲注销时间
+
 ```js
-'GET  accessmanage/loginsettings' //获取配置
-'POST  accessmanage/loginsettings' // 更改配置
+获取配置
+
+'GET  accessmanage/loginsettings' 
+
+更改配置
+
+'POST  accessmanage/loginsettings' 
 body:{ // expire(空闲注销时间),failedLockTime(登录失败锁定时间),retryNumber(允许登录失败次数)
     expire,failedLockTime,retryNumber
 }
-```   
-    2. 密码配置
-       
-        * 最小密码长度
-        * 字符组合要求
+```
+ 密码配置
+
+* 最小密码长度
+* 字符组合要求
+
 ```js
-'GET  accessmanage/passwordstrategy' //获取配置
-'POST  accessmanage/loginsettings' //更改配置
+获取配置
+
+'GET  accessmanage/passwordstrategy' 
+
+更改配置
+
+'POST  accessmanage/passwordstrategy' 
 body:{ // 最小密码长度,字符组合要求
     minLengthOfPasswordManager,passwordStyleManager
 }
-```   
+```
 
 3. 配置备份
     1. 数据备份
     2. 数据恢复
-        * 可选恢复文件
+        - [x] 可选恢复文件
     3. 备份服务器设置
-         * 可修改
+         - [x] 可修改
 
 ```js
-'GET  backupsettings/backup' //备份服务器配置
+备份服务器配置
 
-'POST  backupsettings/recovery' //更改服务器配置
+'GET  backupsettings/backup' 
+
+更改服务器配置
+
+'POST  backupsettings/recovery' 
 body:{
     name
 }
 
-'GET  backupsettings' //获取备份服务器配置
-'POST  backupsettings/ftpconfig' //更改服务器配置
+获取备份服务器配置
+
+'GET  backupsettings' 
+
+更改服务器配置
+
+'POST  backupsettings/ftpconfig' 
 body:{ // 密码,账号,备份服务器IP,路径
     ftpPassword,ftpUserName,host,serverPath
 }
 ```
 
 4. 基本配置
-    * 恢复出厂设置(首次使用需要初始化系统管理员信息)
+    - [x] 恢复出厂设置(首次使用需要初始化系统管理员信息)
 ```
 path: basesettings =>
 path: personalsettings（初始化）
 ```
 ```js
-'GET  /systemscheme/getcaptcha' //获取验证码
-'POST  /systemscheme/checkcaptcha' body:{captcha} //验证码
+获取验证码
+'GET  /systemscheme/getcaptcha' 
+
+验证验证码
+'POST  /systemscheme/checkcaptcha' body:{captcha} 
+
 'POST  /dbinit' body:{captcha} //初始化
 body:{
     logBackup:{},
@@ -563,11 +601,13 @@ body:{
 }
 ```
 
-5. 高级配置（未实现）
+高级配置（未实现）
 
-    - 证书配置
-    * 导入证书
-    * 表格展示
+- 证书配置
+
+- 导入证书
+- 表格展示
+
 ```js
 'POST  /certificatesettings'//导入证书
 ```
@@ -591,10 +631,11 @@ body:{
     mode,outer
 }
 ```
-2. 网络接口
+- 网络接口
 
 ```js
-'GET  network/interface'  //保存配置
+保存/修改配置
+'GET/POST  network/interface'  
 body:{
     inner:[],
     mode,outer
@@ -660,20 +701,44 @@ body:{
 - 404页面
 - 系统设置
 - 安全审计
-    + 用户统计(新增)
-```js
-'POST  `/appMonitor/queryActivityUser/${startTime}/${endTime}`'  //
-body:{
-    currPageNo,dataTimeType,isDownload,pageSize,range,userName
-}
-```
-    + 操作统计(新增)
-```js
-'POST  /statistics/appMonitor/queryOperation'  //
-body:{
-    currPageNo,dataTimeType,isDownload,pageSize,range,userName
-}
-```    
+
+    - [x] 用户统计(新增)
+
+      ```j s
+      'POST  `/appMonitor/queryActivityUser/${startTime}/${endTime}`'  //
+      body:{
+          currPageNo,dataTimeType,isDownload,pageSize,range,userName
+      }
+      ```
+
+    - [x] 操作统计(新增)
+
+      ```js
+      'GET  /log/statistics/appMonitor/queryOperation' 
+      ```
+
+    - [x] 应用日志
+
+      ```
+      应用日志
+      'POST  /log/appMonitor' 
+      body:{
+          current,fullTextQuery,query:{},size
+      }
+      
+      自动提示
+      'POST  /log/column/completion' 
+      body:{
+          columnName
+      }
+      
+      日志详情
+      'GET  /log/appMonitor/${params}' 
+      body:{
+         
+      }
+      ```
+
 - 日志报表
 
 
